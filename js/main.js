@@ -1,5 +1,5 @@
 
-document.addEventListener("click",  (clic)=>{
+document.addEventListener("click", (clic)=>{
     //console.log(clic)
     if(clic.target.matches("#informes")) url("login old.html")
     if(clic.target.matches("#exit")) url("index.html")
