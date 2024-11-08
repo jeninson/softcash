@@ -37,7 +37,5 @@ function validarLogin(){
     }
     
     if(!msg=="") {$div_msg.innerHTML = "<b>"+msg+"</b>"; return false;}
-
     $div_msg.innerHTML = "Datos ingresados correctamente";
-
 }
