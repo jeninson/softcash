@@ -6,4 +6,9 @@ body{background-color: gainsboro}
     background-color: brown;
 }
 
-#id_btn{}
+#id_btn{
+    color: black;
+    margin: 20px 0;
+    border: blue 2px solid;
+    border-radius: 5px;
+}
