@@ -1,9 +1,25 @@
 <?php
 
-$servidor = 'localhost';
-$base = 'bd_822_823';
+class Db {
+    private $servidor = 'localhost';
+    private $usuario = 'root';
+    private $contrasena = '';
+    private $base = 'prueba822_23.';
+    
+    public function conectar() {
+        $conexion = new mysqli($this->servidor, $this->usuario, $this->contrasena, $this->base);
+        if ($conexion->connect_error) {
+            die('Error de conexión: ' . $conexion->connect_error);
+        }
+        return $conexion;
+    }
+}
+
+/*
+$servidor = '127.0.0.1';
 $usuario = 'root';
 $contrasena = '';
+$base = 'prueba822_23';
 
 $conexion = new mysqli($servidor, $usuario, $contrasena, $base);
 
@@ -14,20 +30,5 @@ if ($conexion->connect_error) {
 echo "Conexión exitosa";
 
 // Cerrar conexión
-$conexion->close();
+$conexion->close();*/
 
-/*|
-class DB {
-    private $servidor = 'localhost';
-    private $base = 'prueba822_23';
-    private $usuario = 'root';
-    private $contrasena = '';
-    
-    public function conectar() {
-        $conexion = new mysqli($this->servidor, $this->usuario, $this->contrasena, $this->base);
-        if ($conexion->connect_error) {
-            die('Error de conexión: ' . $conexion->connect_error);
-        }
-        return $conexion;
-    }
-}*/
