@@ -1,5 +1,5 @@
 <?php
-    $credenciales = file_get_contents('../../config/back.json');
+    $credenciales = file_get_contents('credenciales.json');
     $credenciales = json_decode($credenciales, true);
 
 class Db {
