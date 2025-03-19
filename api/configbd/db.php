@@ -1,11 +1,21 @@
 <?php
+    $credenciales = file_get_contents('../../config/back.json');
+    $credenciales = json_decode($credenciales, true);
 
 class Db {
-    private $servidor = 'localhost';
-    private $usuario = 'root';
-    private $contrasena = '';
-    private $base = 'prueba822_23.';
+    private $servidor;
+    private $usuario;
+    private $contrasena;
+    private $base;
     
+    public function __construct() {
+        global $credenciales;
+        $this->servidor = $credenciales['host'];
+        $this->usuario = $credenciales['user'];
+        $this->contrasena = $credenciales['pass'];
+        $this->base = $credenciales['db'];
+    }
+
     public function conectar() {
         $conexion = new mysqli($this->servidor, $this->usuario, $this->contrasena, $this->base);
         if ($conexion->connect_error) {

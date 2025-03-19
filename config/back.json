@@ -1,8 +1,7 @@
 {
-    
     "host": "localhost",
     "port": "3306",
     "user": "root",
     "pass": "",
-    "db": "db"
+    "db": "prueba822_23"
 }

@@ -1,7 +1,7 @@
 {    
-    "host": "localhost",
+    "host": "192.168.0.215",
     "port": "3306",
-    "user": "root",
-    "pass": "",
-    "db": "db"
+    "user": "usrbdsoftcash",
+    "pass": "ASD_@Scash-*2023",
+    "db": "bdSoftCash2023"
 }
