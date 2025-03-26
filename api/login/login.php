@@ -5,7 +5,7 @@
 
 try {
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = json_decode(file_get_contents('php://input'), true);
+        //$data = json_decode(file_get_contents('php://input'), true);
         try {
             //Validacion de parametros
             if(isset($_POST['usuario']) && isset($_POST['clave'])){ 
