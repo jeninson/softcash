@@ -5,7 +5,6 @@
 
 try {
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        //$data = json_decode(file_get_contents('php://input'), true);
         try {
             //Validacion de parametros
             if(isset($_POST['usuario']) && isset($_POST['clave'])){ 
@@ -37,13 +36,12 @@ try {
                 }
             } else {
                 header("HTTP/1.1 402 Bad Request");
-                echo json_encode(array("code"=>400, "msg" => "Error, faltan parámetros necesarios"));
+                echo json_encode(array("code"=>402, "msg" => "Error, faltan parámetros necesarios"));
             }
         } catch (Exception $e) {
             header("HTTP/1.1 500 Internal Server Error");
             echo json_encode(array("code"=>500, "msg" => "Error en el servidor \n".$e->getMessage()));
         }
-        exit();
     } else {
         header("HTTP/1.1 400 Bad Request");
         echo json_encode(array("code"=>400, "msg" => "Solicitud incorrecta por parte del cliente"));
