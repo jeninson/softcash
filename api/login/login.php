@@ -7,6 +7,7 @@ try {
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             //Validacion de parametros
+            $_POST = json_decode(file_get_contents('php://input'), true);
             if(isset($_POST['usuario']) && isset($_POST['clave'])){ 
                 //conexion a la base de datos               
                 $base = new Db();
