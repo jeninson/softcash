@@ -8,7 +8,7 @@ document.addEventListener("click", (clic)=>{
 document.addEventListener("submit", (e)=>{
     e.preventDefault()
     //console.log(e.target)
-    if(e.target.matches("#f_login")) validarLogin()
+    if(e.target.matches("#loginForm")) validarLogin()
 })
 
 function url(destino){
@@ -19,23 +19,28 @@ function validarLogin(){
     let ExReg_mail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/
     let ExRegContraseña = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,18}$/
     
-    let $div_msg = document.querySelector("#msg_log"), msg=""
+    let $div_msg = document.querySelector("#div_msg"), msg=""
     $div_msg.innerHTML="Procesando...."
 
-    let usuario = user.value, pass = clave.value
+    let usuario = username.value, pass = password.value
     console.log("user: "+usuario, "Password: "+ pass)
-
-    //if(!ExReg_mail.test(usuario)) {$div_msg.innerHTML = "<b>Correo invalido</b>"; return false;}
-    //if(!ExRegContraseña.test(pass)) {$div_msg.innerHTML = "<b>Contaseña invalida</b>"; return false;}
+    
     if(!ExReg_mail.test(usuario)) {
         msg="Correo invalido"
-        if(!ExRegContraseña.test(pass)) {
+        if(pass.trim() === '') {
             msg = "Correo y Contraseña invalidos" 
         } 
-    } else if(!ExRegContraseña.test(pass)) {
-        msg = "Contraseña invalida" 
-    }
+    } else if(pass.trim() === '') {
+        msg = "Contraseña requerida" 
+    }// else if(!ExRegContraseña.test(pass)) {msg = "Contraseña invalida"}
     
-    if(!msg=="") {$div_msg.innerHTML = "<b>"+msg+"</b>"; return false;}
+    if(!msg=="") {        
+        $div_msg.innerHTML = "<b class='text-red'>"+msg+"</b>";    
+        setTimeout(() => {
+            $div_msg.innerHTML = ""; 
+        }, 3000);         
+        return false;  
+    }
     $div_msg.innerHTML = "Datos ingresados correctamente";
+    
 }
