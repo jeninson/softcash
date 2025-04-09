@@ -1,3 +1,4 @@
+import { enviarAjax } from './tool.js';
 
 export function validarLogin(){
     let ExReg_mail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/
@@ -7,7 +8,6 @@ export function validarLogin(){
     $div_msg.innerHTML="Procesando...."
 
     let usuario = username.value, pass = password.value
-    //console.log("user: "+usuario, "Password: "+ pass)
     
     if(!ExReg_mail.test(usuario)) {
         msg="Correo invalido"
@@ -25,34 +25,20 @@ export function validarLogin(){
         }, 3000);         
         return false;  
     }
-    enviarAjax(usuario, pass); 
-}
-
-function enviarAjax(user , pass){
-    
-    //console.log(user,pass)
-    let $div_msg = document.querySelector("#div_msg")
-    //Peticion Fecth
-    let header = {
-        headers: {
-            "Content-Type":"application/json"
-        },
+    let info = {
+        url: "../api/login/login.php",
         method: "POST",
-        body: JSON.stringify({
-            "usuario": user,
-            "clave": pass
-        }) 
-    }
-    fetch("../api/login/login.php",header)
-    .then(resp=> resp.json())
-    .then((data)=>{
-        console.log(data)
-        if(data.code==200){
-            $div_msg.innerHTML = data.Usuario
-        }else{
-            $div_msg.innerHTML = data.msg
+        param: {
+            usuario,
+            clave: pass
+        },
+        fResp: (data)=> {                
+            if(data.code==200)
+                $div_msg.innerHTML = data.Usuario
+            else
+                $div_msg.innerHTML = data.msg
+            
         }
-    })
-    .catch((error)=>{})
-
+    }
+    enviarAjax(info); 
 }
