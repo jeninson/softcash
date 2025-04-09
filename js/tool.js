@@ -16,3 +16,7 @@ export async function enviarAjax(info){
         fResp({code: 500, msg: "Error en la solicitud"})
     }
 }
+
+export function url(destino){
+    location.href=destino
+}

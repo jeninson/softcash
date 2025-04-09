@@ -12,7 +12,3 @@ document.addEventListener("submit", (e)=>{
     //console.log(e.target)
     if(e.target.matches("#loginForm")) validarLogin()
 })
-
-function url(destino){
-    location.href=destino
-}

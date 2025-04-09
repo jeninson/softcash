@@ -1,4 +1,5 @@
-import { enviarAjax } from './tool.js';
+import { enviarAjax, url } from './tool.js';
+import { } from './md5.js';
 
 export function validarLogin(){
     let ExReg_mail = /^[^@]+@[^@]+\.[a-zA-Z]{2,}$/
@@ -8,6 +9,7 @@ export function validarLogin(){
     $div_msg.innerHTML="Procesando...."
 
     let usuario = username.value, pass = password.value
+    password.value = md5(pass)
     
     if(!ExReg_mail.test(usuario)) {
         msg="Correo invalido"
@@ -30,11 +32,11 @@ export function validarLogin(){
         method: "POST",
         param: {
             usuario,
-            clave: pass
+            clave: md5(pass)
         },
         fResp: (data)=> {                
             if(data.code==200)
-                $div_msg.innerHTML = data.Usuario
+                url("principal.html?id="+data.idUser)
             else
                 $div_msg.innerHTML = data.msg
             

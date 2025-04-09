@@ -14,7 +14,7 @@ try {
                 $conn = $base->conectar();
                 $user = $_POST['usuario'];
                 $pass = $_POST['clave'];
-                $sql = "SELECT `id`, `nombres`, `apellidos` FROM `tbusuarios` WHERE `correo` =:user_name  and `contrasena` = MD5(:password_user)";
+                $sql = "SELECT `id`, `nombres`, `apellidos` FROM `tbusuarios` WHERE `correo` =:user_name  and `contrasena` = :password_user";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindValue(':user_name', trim($user), PDO::PARAM_STR);
                 $stmt->bindValue(':password_user', trim($pass), PDO::PARAM_STR);
