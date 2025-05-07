@@ -9,7 +9,8 @@ export function validarLogin(){
     $div_msg.innerHTML="Procesando...."
 
     let usuario = username.value, pass = password.value
-    password.value = md5(pass)
+    //Mostrar el password encriptado
+    //password.value = md5(pass)
     
     if(!ExReg_mail.test(usuario)) {
         msg="Correo invalido"
@@ -36,7 +37,7 @@ export function validarLogin(){
         },
         fResp: (data)=> {                
             if(data.code==200)
-                url("principal.html?id="+data.idUser)
+                url("principal.html?id="+data.idTk)
             else
                 $div_msg.innerHTML = data.msg
             

@@ -1,5 +1,5 @@
 <?php
-    require_once '../configbd/db.php';
+    require_once 'loginModel.php';
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
@@ -8,33 +8,29 @@ try {
         try {
             //Validacion de parametros
             $_POST = json_decode(file_get_contents('php://input'), true);
-            if(isset($_POST['usuario']) && isset($_POST['clave'])){ 
-                //conexion a la base de datos               
-                $base = new Db();
-                $conn = $base->conectar();
-                $user = $_POST['usuario'];
-                $pass = $_POST['clave'];
-                $sql = "SELECT `id`, `nombres`, `apellidos` FROM `tbusuarios` WHERE `correo` =:user_name  and `contrasena` = :password_user";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindValue(':user_name', trim($user), PDO::PARAM_STR);
-                $stmt->bindValue(':password_user', trim($pass), PDO::PARAM_STR);
+            // Validar parámetros
+            if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
+                $usuario = htmlspecialchars(trim($_POST['usuario']));
+                $clave = htmlspecialchars(trim($_POST['clave']));
+                
+                //Nuevo objero de Modelo LoginModel
+                $loginModel = new LoginModel();
+                //Llamada al metodo de autenticacion
+                $result = $loginModel->autenticacionUsuario($_POST['usuario'], $_POST['clave']);
+                if(count($result) > 0){
 
-                if($stmt->execute()){
-                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    if(count($result) > 0){
-                        $idUser = $result[0]["id"];
-                        $userNombre = $result[0]["nombres"] . " " . $result[0]["apellidos"];
-                        
-                        header("HTTP/1.1 200 OK");
-                        echo json_encode(array("code"=>200, "idUser" => $idUser, "Usuario" => $userNombre, "msg" => "Usuario OK"));
-                    } else {
-                        header("HTTP/1.1 203 Non-Authoritative Information");
-                        echo json_encode(array("code"=>203, "msg" => "Las credenciales no son válidas"));
-                    }
+                    $idUser = $result[0]["id"];
+                    $userNombre = $result[0]["nombres"] . " " . $result[0]["apellidos"];
+                    
+                    //Generar token
+                    $tokenGenerado = $loginModel->generarToken($idUser, $userNombre);
+                    
+                    header("HTTP/1.1 200 OK");
+                    echo json_encode(array("code"=>200, "idUser" => $idUser, "Usuario" => $userNombre, "idTk"=>$tokenGenerado, "msg" => "Usuario OK"));
                 } else {
-                    header("HTTP/1.1 500 Internal Server Error");
-                    echo json_encode(array("code"=>500, "msg" => "Error al ejecutar la consulta"));
-                }
+                    header("HTTP/1.1 203 Non-Authoritative Information");
+                    echo json_encode(array("code"=>203, "msg" => "Las credenciales no son válidas"));
+                }               
             } else {
                 header("HTTP/1.1 402 Bad Request");
                 echo json_encode(array("code"=>402, "msg" => "Error, faltan parámetros necesarios"));
