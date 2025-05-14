@@ -36,12 +36,27 @@ export function validarLogin(){
             clave: md5(pass)
         },
         fResp: (data)=> {                
-            if(data.code==200)
-                url("principal.html?id="+data.idTk)
-            else
-                $div_msg.innerHTML = data.msg
-            
+            if(data.code==200){
+                localStorage.clear()
+                localStorage.setItem("idTk", data.idTk)
+                localStorage.setItem("user", data.Usuario)
+                localStorage.setItem("idUser", data.idUser)
+                //console.log(data)
+                url("principal.html")
+            } else $div_msg.innerHTML = data.msg
         }
     }
     enviarAjax(info); 
+}
+
+export function validarToken(){
+    let idTk = localStorage.getItem("idTk")
+    let idUser = localStorage.getItem("idUser")
+    let user = localStorage.getItem("user")
+
+    if(idTk==null || idUser==null || user==null){
+        localStorage.clear()
+    } else {
+        url("principal.html")
+    }
 }
