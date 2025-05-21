@@ -1,4 +1,5 @@
 import { url } from './tool.js';
+import { consultarRegistros } from './registros.js';
 
 export function menu(){
     document.querySelectorAll('#sidebar a').forEach(link => {
@@ -50,5 +51,6 @@ export function validarUsuario(){
         document.querySelector("#lb_user").innerHTML = user
         document.querySelector("#iduser").value = idUser
         document.querySelector("#idtk").value = idTk
+        consultarRegistros(10)
     }
 }
