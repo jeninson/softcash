@@ -1,5 +1,6 @@
 import { url } from './tool.js';
 import { consultarRegistros } from './registros.js';
+import { cargarCategorias } from './categoria.js';
 
 export function menu(){
     document.querySelectorAll('#sidebar a').forEach(link => {
@@ -15,6 +16,7 @@ export function menu(){
             const target = link.getAttribute('href');
             //Clic en Salir
             console.log(target)
+            if(target == "#ingreso") cargarCategorias("","INGRESO")
             if(target == "#salir"){
                 localStorage.clear()
                 url("index.html")
