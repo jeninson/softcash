@@ -15,8 +15,7 @@ export function menu(){
             // Mostrar sección seleccionada
             const target = link.getAttribute('href');
             //Clic en Salir
-            console.log(target)
-            if(target == "#ingreso") cargarCategorias("","INGRESO")
+            //console.log(target) 
             if(target == "#salir"){
                 localStorage.clear()
                 url("index.html")
@@ -54,5 +53,7 @@ export function validarUsuario(){
         document.querySelector("#iduser").value = idUser
         document.querySelector("#idtk").value = idTk
         consultarRegistros(10)
+        cargarCategorias("sl_cat_ing","","INGRESO")
+        cargarCategorias("sl_cat_gas","","EGRESO")
     }
 }

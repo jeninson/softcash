@@ -1,6 +1,6 @@
 import { enviarAjax } from "./tool.js";
 
-export function cargarCategorias(id = null, tipo = null) {
+export function cargarCategorias(el="", id = null, tipo = null) {
     let info = {
         url: "../api/categoria/categoria.php",
         method: "GET",
@@ -10,7 +10,7 @@ export function cargarCategorias(id = null, tipo = null) {
             tipo
         },
         fResp: (data) => {
-            let $select = document.querySelector(`#sl_cat_ing`), opt;
+            let $select = document.querySelector(`#${el}`), opt;
             $select.innerHTML = "<option value=''>Seleccione una categoría</option>";
             if (data.code == 200) {
                 data.data.forEach((cat) => {

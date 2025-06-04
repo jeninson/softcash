@@ -23,7 +23,7 @@
             <ul class="list-unstyled components">
                 <li><a href="#inicio" class="active"><i class="bi bi-house-door-fill me-2"></i> Inicio</a></li>
                 <li><a href="#ingreso"><i class="bi bi-arrow-up-circle-fill me-2"></i> Ingreso</a></li>
-                <li><a href="#egresos"><i class="bi bi-arrow-down-circle-fill me-2"></i> Egresos</a></li>
+                <li><a href="#gastos"><i class="bi bi-arrow-down-circle-fill me-2"></i> Gastos</a></li>
                 <li><a href="#categorias"><i class="bi bi-tags-fill me-2"></i> Categorías</a></li>
                 <li><a href="#salir" class="bg-danger"><i class="bi bi-x-circle-fill me-2"></i> Salir</a></li>
             </ul>
@@ -66,7 +66,7 @@
             <!-- Otras secciones (placeholder) -->
             <div id="ingreso" class="container-fluid p-4 section" style="display: none;">
                 <!-- Contenido Ingreso -->
-                 <h2><i class="bi bi-arrow-up-circle-fill"></i> Ingreso</h2>
+                <h2><i class="bi bi-arrow-up-circle-fill"></i> Ingreso</h2>
                 <p>Formuladio para registrar los Ingreso a SoftCash.</p>
                 <hr>
                 <div class="card mt-3">
@@ -102,14 +102,54 @@
                                     <label for="tx_des_ing">Descripción del Ingreso</label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-primary">Guardar Ingreso</button>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div id="egresos" class="container-fluid p-4 section" style="display: none;">
-                <!-- Contenido Egresos -->
+            <div id="gastos" class="container-fluid p-4 section" style="display: none;">
+                <!-- Contenido Gasto -->
+                <h2><i class="bi bi-arrow-up-circle-fill"></i> Gastos</h2>
+                <p>Formuladio para registrar los <b>Gastos</b> a SoftCash.</p>
+                <hr>
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Información del <b>Gasto</b>
+                    </div>
+                    <div class="card-body">
+                        <form action="" class="form-control" method=""  id="form_gasto">
+                            <div class="mb-3">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="tx_fec_gas" placeholder="Fecha del Gasto" required>
+                                    <label for="tx_fec_gas">Fecha del Gasto</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="tx_val_gas" placeholder="0" required>
+                                    <label for="tx_val_gas">Valor del Gasto</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sl_cat_gas" class="form-label">Categoria</label>
+                                <select class="form-select" id="sl_cat_gas" required>
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="tx_des_gas" placeholder="Descripción del Gasto" required>
+                                    <label for="tx_des_ing">Descripción del Gasto</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar Gasto</button>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <div id="categorias" class="container-fluid p-4 section" style="display: none;">

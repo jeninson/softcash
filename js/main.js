@@ -2,6 +2,7 @@
 import { validarLogin, validarToken} from "./login.js"
 import { activar_menu, menu, validarUsuario } from "./principal.js"
 import { guardarIngreso } from "./ingresos.js"
+import { guardarGasto } from "./gastos.js"
 
 document.addEventListener("click", (clic)=>{
     //console.log(clic)
@@ -17,6 +18,7 @@ document.addEventListener("submit", (e)=>{
     //console.log(e.target)
     if(e.target.matches("#loginForm")) validarLogin()
     if(e.target.matches("#form_ingreso")) guardarIngreso()
+    if(e.target.matches("#form_gasto")) guardarGasto()
 })
 
 document.addEventListener("DOMContentLoaded", (e)=>{

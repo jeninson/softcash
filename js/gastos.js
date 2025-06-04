@@ -1,13 +1,12 @@
-
-import { enviarAjax, url } from './tool.js';
+import { enviarAjax } from "./tool.js";
 import { consultarRegistros } from "./registros.js";
 
-export function guardarIngreso() {
+export function guardarGasto() {
     // Validar campos requeridos
-    if (document.querySelector('#tx_fec_ing').value === '' ||
-        document.querySelector('#tx_val_ing').value === '' ||
-        document.querySelector('#sl_cat_ing').value === '' ||
-        document.querySelector('#tx_des_ing').value === '') {
+    if (document.querySelector('#tx_fec_gas').value === '' ||
+        document.querySelector('#tx_val_gas').value === '' ||
+        document.querySelector('#sl_cat_gas').value === '' ||
+        document.querySelector('#tx_des_gas').value === '') {
         alert('Por favor, complete todos los campos requeridos.');
         return;
     }
@@ -18,16 +17,16 @@ export function guardarIngreso() {
         param: {
             idTk: localStorage.getItem('idTk'),
             idUser: document.querySelector('#iduser').value,
-            tipo_registro: "1", // 1 para ingreso
-            fecha: document.querySelector('#tx_fec_ing').value,
-            valor: document.querySelector('#tx_val_ing').value,
-            categoria: document.querySelector('#sl_cat_ing').value,
-            descripcion: document.querySelector('#tx_des_ing').value
+            tipo_registro: "2", // 2 para gasto
+            fecha: document.querySelector('#tx_fec_gas').value,
+            valor: document.querySelector('#tx_val_gas').value,
+            categoria: document.querySelector('#sl_cat_gas').value,
+            descripcion: document.querySelector('#tx_des_gas').value
         },
         fResp: (data) => {
             if (data.code == 200) {
                 alert(data.msg);
-                document.querySelector('#form_ingreso').reset();
+                document.querySelector('#form_gasto').reset();
                 consultarRegistros(10)
                 url("principal.html"); // Redirigir a la sección de registros
             } else {

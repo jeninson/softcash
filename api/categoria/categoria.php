@@ -11,7 +11,7 @@ try {
             
             //$idUser = htmlspecialchars(trim($_POST['idUser']));
             $id = ""; $tipo = "";
-            if(!empty($_GET['id'])){$id = trim($_GET['id']);}
+            if(!empty($_GET['id'])){$id = trim(htmlspecialchars($_GET['id']));}
             if(!empty($_GET['tipo'])){$tipo = trim($_GET['tipo']);}
             
             $registrosModel = new CategoriaModel();

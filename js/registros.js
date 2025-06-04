@@ -13,7 +13,7 @@ export function consultarRegistros(limite=10){
                 let $item_registros = document.querySelector("#item_registros")              
                 if(data.code==200){
                     items = "";
-                    console.log(data.data)
+                    //console.log(data.data)
                     data.data.forEach((reg) => {
                         let cl="", valor = parseFloat(reg.valor).toLocaleString('es-ES', { style: 'currency', currency: 'PES' });
                         reg.valor = valor;
@@ -32,7 +32,7 @@ export function consultarRegistros(limite=10){
                                     </td>
                                 </tr>`;
                     });
-                    console.log()
+                    //console.log()
                 }else {
                     items="<tr><td colspan='6' class='text-center text-danger'><b>Error al consultar los datos</b></td></tr>"
                 }
