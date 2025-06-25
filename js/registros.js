@@ -1,4 +1,4 @@
-import { enviarAjax } from "./tool.js";
+import { enviarAjax, url } from "./tool.js";
 
 export function consultarRegistros(id="",limite=""){
     let info = {
@@ -81,10 +81,8 @@ export function eliminarRegistro(id){
         },
         fResp: (data) => {
             if(data.code==200){
-                alert(data.msg);
-                consultarRegistros("",10);
-                document.querySelector("#ModalEliminarReg").classList.remove("show");
-                document.querySelector("#ModalEliminarReg").style.display = "none";
+                alert(data.msg)
+                url("principal.html")
             } else {
                 alert('Error al eliminar el registro: ' + data.msg);
             }
