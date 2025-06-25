@@ -52,7 +52,7 @@ export function validarUsuario(){
         document.querySelector("#lb_user").innerHTML = user
         document.querySelector("#iduser").value = idUser
         document.querySelector("#idtk").value = idTk
-        consultarRegistros(10)
+        consultarRegistros("",10)
         cargarCategorias("sl_cat_ing","","INGRESO")
         cargarCategorias("sl_cat_gas","","EGRESO")
     }

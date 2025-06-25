@@ -10,12 +10,24 @@ class RegristrosModel {
         $this->conn = $base->conectar();
     }
 
-    public function consultarUltimosMovimiento($idUser, $lim) {
+    public function consultarUltimosMovimiento($id, $lim) {
         try {
             // Preparar la consulta SQL para evitar inyecciones SQL
-            $sql = "SELECT r.`id`, r.`valor`, r.`fecha`, r.`descripcion`, r.`updated_at`, r.`id_usuario`, CONCAT(u.nombres,' ',u.apellidos) as 'Usuario', r.`tipo_reg`, t.Tipo as 'tipo_registro', r.id_categoria, c.nombre as 'categoria' FROM `tbregistros` r inner JOIN tbusuarios u ON (r.`id_usuario`=u.id) inner JOIN tbtipo_reg t ON (r.`tipo_reg`=t.id) inner join tbcategorias c ON (r.id_categoria=c.id) ORDER BY `r`.`fecha` DESC LIMIT :lim";
+            $sql = "SELECT r.`id`, r.`valor`, r.`fecha`, r.`descripcion`, r.`updated_at`, r.`id_usuario`, CONCAT(u.nombres,' ',u.apellidos) as 'Usuario', r.`tipo_reg`, t.Tipo as 'tipo_registro', r.id_categoria, c.nombre as 'categoria' FROM `tbregistros` r inner JOIN tbusuarios u ON (r.`id_usuario`=u.id) inner JOIN tbtipo_reg t ON (r.`tipo_reg`=t.id) inner join tbcategorias c ON (r.id_categoria=c.id)";
+            if (!empty($id)) {
+                $sql .= " WHERE r.id = :id";
+            }
+            $sql .= " ORDER BY r.fecha DESC";
+            if (!empty($lim)) {
+                $sql .= " LIMIT :lim";
+            }
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue(':lim', $lim, PDO::PARAM_INT);
+            if (!empty($id)) {
+                $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            }
+            if (!empty($lim)) {
+                $stmt->bindValue(':lim', $lim, PDO::PARAM_INT);
+            }
             if ($stmt->execute()) {
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             } else {
@@ -47,6 +59,23 @@ class RegristrosModel {
             }
         } catch (Exception $e) {
             throw new Exception("Error al guardar el ingreso: " . $e->getMessage());
+        }
+    }
+
+    function eliminarRegistro($id) {
+        try {
+            // Preparar la consulta SQL para evitar inyecciones SQL
+            $sql = "DELETE FROM `tbregistros` WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error al eliminar el registro: " . $e->getMessage());
         }
     }
 }

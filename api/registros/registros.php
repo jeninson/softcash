@@ -10,14 +10,13 @@ try {
             //Validacion de parametros
             //$_POST = json_decode(file_get_contents('php://input'), true);
             // Validar parámetros
-            if (!empty($_GET['limite'])) {
-                //$idUser = htmlspecialchars(trim($_POST['idUser']));
-                $limite = htmlspecialchars(trim($_GET['limite']));
-                
+
+            $limite = htmlspecialchars(trim($_GET['limite'])) ?? 10; // Valor por defecto si no se proporciona
+            $id = htmlspecialchars(trim($_GET['id'])) ?? "";  
                 //Nuevo objero de Modelo LoginModel
                 $registrosModel = new RegristrosModel();
                 //Llamada al metodo de autenticacion
-                $result = $registrosModel->consultarUltimosMovimiento(" ", $limite);
+                $result = $registrosModel->consultarUltimosMovimiento($id, $limite);
                 if(count($result) > 0){
                     header("HTTP/1.1 200 OK");
                     echo json_encode(array("code"=>200, "data" => $result, "msg" => "Consulta correcta"));
@@ -25,10 +24,7 @@ try {
                     header("HTTP/1.1 203 Non-Authoritative Information");
                     echo json_encode(array("code"=>203, "msg" => "No se encontraron registros"));
                 }               
-            } else {
-                header("HTTP/1.1 402 Bad Request");
-                echo json_encode(array("code"=>402, "msg" => "Error, faltan parámetros necesarios"));
-            }
+            
         } catch (Exception $e) {
             header("HTTP/1.1 500 Internal Server Error");
             echo json_encode(array("code"=>500, "msg" => "Error en el servidor \n".$e->getMessage()));
@@ -55,6 +51,38 @@ try {
                 $registrosModel = new RegristrosModel();
                 //Llamada al metodo de autenticacion
                 $result = $registrosModel->guardarRegistro($idUser, $tipo_registro, $fecha, $valor, $idcategoria, $descripcion);
+                if ($result) {
+                    header("HTTP/1.1 200 OK");
+                    echo json_encode(array("code"=>200, "msg" => "Registro guardado correctamente"));
+                } else {
+                    header("HTTP/1.1 500 Internal Server Error");
+                    echo json_encode(array("code"=>500, "msg" => "Error al guardar el registro"));
+                }               
+            } else {
+                header("HTTP/1.1 402 Bad Request");
+                echo json_encode(array("code"=>402, "msg" => "Error, faltan parámetros necesarios"));
+            }
+        } catch (Exception $e) {
+            header("HTTP/1.1 500 Internal Server Error");
+            echo json_encode(array("code"=>500, "msg" => "Error en el servidor \n".$e->getMessage()));
+        }
+    } else if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+        try {
+            //Validacion de parametros
+            $_POST = json_decode(file_get_contents('php://input'), true);
+            // Validar parámetros
+            if (!empty($_POST['idTk']) && !empty($_POST['id'])) {
+                $idTk = htmlspecialchars(trim($_POST['idTk']));
+                $id = htmlspecialchars(trim($_POST['id']));
+
+                // Validar el token
+                //$tokenValido = true; // Aquí deberías implementar la lógica para validar el token
+                //if (!$tokenValido) {header("HTTP/1.1 401 Unauthorized");echo json_encode(array("code"=>401, "msg" => "Token inválido o expirado"));exit;}
+                
+                //Nuevo objeto de Modelo IngresosModel
+                $registrosModel = new RegristrosModel();
+                //Llamada al metodo de autenticacion
+                $result = $registrosModel->eliminarRegistro($id);
                 if ($result) {
                     header("HTTP/1.1 200 OK");
                     echo json_encode(array("code"=>200, "msg" => "Registro guardado correctamente"));
