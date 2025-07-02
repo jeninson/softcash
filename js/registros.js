@@ -193,7 +193,7 @@ export function actualizarRegistro() {
         },
         fResp: (data) => {
             if (data.code == 200) {
-                //alert(data.msg);
+                alert(data.msg);
                 consultarRegistros(10)
                 url("principal.html"); // Redirigir a la sección de registros
             } else {
