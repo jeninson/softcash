@@ -78,5 +78,27 @@ class RegristrosModel {
             throw new Exception("Error al eliminar el registro: " . $e->getMessage());
         }
     }
+
+    function actualizarRegistro($id_reg_act, $idUser, $tipo_registro, $fecha, $valor, $idcategoria, $descripcion) {
+        try {
+            // Preparar la consulta SQL para evitar inyecciones SQL
+            $sql = "UPDATE `tbregistros` SET `id_usuario` = :idUser, `valor` = :valor, `fecha` = :fecha, `descripcion` = :descripcion, `id_categoria` = :idcategoria WHERE id = :id_reg_act";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id_reg_act', $id_reg_act, PDO::PARAM_INT);
+            $stmt->bindParam(':idUser', $idUser, PDO::PARAM_INT);
+            $stmt->bindParam(':fecha', $fecha);
+            $stmt->bindParam(':valor', $valor);
+            $stmt->bindParam(':idcategoria', $idcategoria, PDO::PARAM_INT);
+            $stmt->bindParam(':descripcion', $descripcion);
+
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception("Error al actualizar el registro: " . $e->getMessage());
+        }
+    }
 }
 ?>
